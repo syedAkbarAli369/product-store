@@ -9,8 +9,9 @@ import commentRouter from './routes/commentRoutes';
 
 const app = express();
 
+const frontendUrl = ENV.FRONTEND_URL || 'http://localhost:5173';
 const corsOptions = {
-  origin: ENV.FRONTEND_URL || 'http://localhost:5173',   // Your frontend URL
+  origin: frontendUrl,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
