@@ -1,13 +1,11 @@
 import { Link } from "react-router";
 import { MessageCircleIcon } from "lucide-react";
 
-// Define types (ideally import from a shared types file)
 interface User {
   id: number;
   name: string;
   email: string;
   imageUrl: string | null;
-  // ... other user fields as needed
 }
 
 interface Comment {

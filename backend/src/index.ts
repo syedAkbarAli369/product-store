@@ -9,9 +9,8 @@ import commentRouter from './routes/commentRoutes';
 
 const app = express();
 
-// CORS configuration (works in Express 4)  
 const corsOptions = {
-  origin: 'http://localhost:5173',   // Your frontend URL
+  origin: ENV.FRONTEND_URL || 'http://localhost:5173',   // Your frontend URL
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
@@ -30,6 +29,5 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the Cheel company Mate' });
 });
 
-// app.listen(ENV.PORT, () => console.log(`Server running on PORT: ${ENV.PORT}`));
 
 export default app

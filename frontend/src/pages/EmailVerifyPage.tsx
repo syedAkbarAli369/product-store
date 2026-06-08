@@ -91,7 +91,6 @@ const EmailVerifyPage = () => {
     try {
       await sendOtpMutation.mutateAsync();
       toast.success("Verification code resent")
-      // keep otpSent true, just show a small success message
     } catch (err: any) {
       const msg = err?.message || 'Failed to resend OTP'
       setError(msg);
@@ -106,7 +105,6 @@ const EmailVerifyPage = () => {
       <h1 className="text-2xl font-bold mb-6" style={{ fontFamily: 'LEMONMILK' }}>Verify Email</h1>
 
       {!otpSent ? (
-        // Step 1: Request OTP button
         <div className="text-center">
           <button
             onClick={handleRequestOtp}
@@ -118,7 +116,6 @@ const EmailVerifyPage = () => {
           {error && <p className="text-error mt-2">{error}</p>}
         </div>
       ) : (
-        // Step 2: OTP input form
         <form onSubmit={handleSubmit} onPaste={handlePaste}>
           <p className="text-center text-sm text-base-content/70 mb-4">
             We've sent a 6 digit code to your email.

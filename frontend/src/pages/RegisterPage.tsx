@@ -29,7 +29,6 @@ const RegisterPage = () => {
     e.preventDefault()
 
     try {
-      // await registerMutation.mutateAsync(formData)
       const data = new FormData()
 
       data.append("name", formData.name)
@@ -72,12 +71,6 @@ const RegisterPage = () => {
         onSubmit={handleSubmit}
         className="max-w-md mx-auto space-y-4"
       >
-
-        {/* <input type="file"
-          accept="image/*"
-          className="file-input file-input-bordered w-full"
-          onChange={(e) => setImage(e.target.files?.[0] || null)}
-        /> */}
 
         {/* Avatar Upload */}
         <div className="flex justify-center mb-4">

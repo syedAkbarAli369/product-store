@@ -54,13 +54,11 @@ const ResetPasswordPage = () => {
     }
   };
 
-  // Resend OTP (same as send, but stays on current step)
   const handleResend = async () => {
     setError('');
     try {
       await sendOtpMutation.mutateAsync(email);
       toast.success('OTP resent to your email');
-      // Clear input fields if we're on step 2 (OTP entry)
       if (step === 2) {
         inputRefs.current.forEach((input) => { if (input) input.value = ''; });
       }
@@ -71,7 +69,6 @@ const ResetPasswordPage = () => {
     }
   };
 
-  // Collect OTP and move to password step
   const verifyOtp = async () => {
     const enteredOtp = inputRefs.current.map((input) => input?.value || '').join('');
     if (enteredOtp.length !== 6) {

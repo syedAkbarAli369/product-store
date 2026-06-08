@@ -4,7 +4,6 @@ import { useAuthContext } from "../context/AuthContext";
 import { useCreateComment, useDeleteComment } from "../hooks/useComment";
 import { Link } from "react-router";
 
-// Types (align with your Drizzle schema)
 interface User {
   id: number;
   name: string;

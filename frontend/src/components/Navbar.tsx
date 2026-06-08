@@ -1,11 +1,10 @@
 import { Link } from "react-router";
-import { ShoppingBagIcon, PlusIcon } from "lucide-react"; // UserIcon removed (not used)
+import { ShoppingBagIcon, PlusIcon } from "lucide-react";
 import ThemeSelector from "./ThemeSelector";
 import { useAuthContext } from "../context/AuthContext";
 import { useLogout } from "../hooks/useAuth";
 
 const Navbar = () => {
-  // ✅ Get user from context
   const { isAuthenticated, isVerified, user } = useAuthContext();
   const logoutMutation = useLogout();
 
@@ -18,7 +17,6 @@ const Navbar = () => {
     }
   };
 
-  // ✅ Helper to get first letter of user's name
   const getUserInitial = () => {
     if (!user?.name) return "?";
     return user.name.charAt(0).toUpperCase();

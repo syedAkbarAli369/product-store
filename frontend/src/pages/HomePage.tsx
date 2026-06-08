@@ -7,44 +7,14 @@ import { PackageIcon, UserIcon } from "lucide-react";
 import { Link } from "react-router";
 import cheelImage from "/cp.png";
 
-// Types (same as before)
-// interface User {
-//   id: number;
-//   name: string;
-//   email: string;
-//   imageUrl: string | null;
-// }
-
-// interface Comment {
-//   id: string;
-//   content: string;
-//   userId: number;
-//   productId: string;
-//   createdAt: string;
-//   user: User;
-// }
-
-// interface Product {
-//   id: string;
-//   title: string;
-//   description: string;
-//   imageUrl: string;
-//   userId: number;
-//   createdAt: string;
-//   updatedAt: string;
-//   user?: User;
-//   comments?: Comment[];
-// }
 
 const HomePage = () => {
   const { isAuthenticated } = useAuthContext();
   const [showMyProducts, setShowMyProducts] = useState(false);
 
-  // Fetch all products or my products based on toggle
   const allProductsQuery = useProducts();
   const myProductsQuery = useMyProducts();
 
-  // Choose which data and loading/error to use
   const isMyMode = showMyProducts && isAuthenticated;
   const {
     data: products,
@@ -62,14 +32,12 @@ const HomePage = () => {
     );
   }
 
-  // Make sure products is an array (defensive)
   const productList = Array.isArray(products) ? products : [];
 
   return (
     <div className="space-y-10"
       style={{ fontFamily: 'AEONIK' }}
     >
-      {/* HERO SECTION – unchanged */}
       <div className="hero bg-linear-to-br from-base-300 via-base-200 to-base-300 rounded-box overflow-hidden">
         <div className="hero-content flex-col lg:flex-row-reverse gap-10 py-10">
           <div className="relative">
@@ -100,14 +68,12 @@ const HomePage = () => {
 
       {/* PRODUCTS SECTION */}
       <div>
-        {/* Header with filter buttons */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold flex items-center gap-2">
             <PackageIcon className="size-5 text-primary" />
             {isMyMode ? "My Products" : "All Products"}
           </h2>
 
-          {/* Show "My Products" button only if user is logged in */}
           {isAuthenticated && (
             <button
               onClick={() => setShowMyProducts(!showMyProducts)}
@@ -120,7 +86,6 @@ const HomePage = () => {
           )}
         </div>
 
-        {/* Product grid or empty state */}
         {productList.length === 0 ? (
           <div className="card bg-base-300">
             <div className="card-body items-center text-center py-16">

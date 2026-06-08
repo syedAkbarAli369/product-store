@@ -3,7 +3,7 @@
 import express from 'express'
 
 import { register, login, logout, sendVerifyOtp, verifyEmail, sendResetOtp, resetPassword, isAuthenticated, verifyResetOTP } from '../controllers/authController'
-import userAuth, { AuthRequest } from '../middleware/userAuth'
+import userAuth from '../middleware/userAuth'
 import upload from '../middleware/upload'
 
 const authRouter = express.Router()

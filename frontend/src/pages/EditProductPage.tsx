@@ -24,7 +24,6 @@ const EditProductPage = () => {
     price: 0,
   });
 
-  // Pre-fill form when product data is loaded
   useEffect(() => {
     if (productRaw?.product) {
       const product = productRaw.product;
@@ -35,7 +34,6 @@ const EditProductPage = () => {
         price: product.price,
       });
     } else if (productRaw && !productRaw.product) {
-      // If API returns product directly (no wrapper)
       setFormData({
         title: productRaw.title,
         description: productRaw.description,

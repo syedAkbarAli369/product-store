@@ -5,15 +5,12 @@ import { Navigate, Route, Routes } from 'react-router'
 
 import HomePage from './pages/HomePage'
 import ProductPage from './pages/ProductPage'
-import ProfilePage from './pages/ProfilePage'
-// import CreatePage from './pages/CreatePage'
 import EditProductPage from './pages/EditProductPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import EmailVerifyPage from './pages/EmailVerifyPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import CreatePage from './pages/CreatePage'
-// import ProtectedRoute from './components/ProtectedRoute'
 
 const App = () => {
 
@@ -32,8 +29,6 @@ const App = () => {
           <Route path='/' element={<HomePage />} />
 
           <Route path='/product/:id' element={<ProductPage />} />
-
-          <Route path='/profile' element={isAuthenticated ? <ProfilePage /> : <Navigate to={"/"} />} />
 
           <Route path='/edit/:id' element={isAuthenticated ? <EditProductPage /> : <Navigate to={"/"} />} />
 

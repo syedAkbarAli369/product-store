@@ -1,6 +1,6 @@
 
 
-import type { Request, Response } from 'express'
+import type { Response } from 'express'
 import * as queries from '../db/queries'
 import { AuthRequest } from '../middleware/userAuth'
 

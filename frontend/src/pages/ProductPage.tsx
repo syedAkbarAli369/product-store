@@ -7,7 +7,6 @@ import { useParams, Link, useNavigate } from "react-router";
 import { useAuthContext } from "../context/AuthContext";
 import { toast } from "react-toastify";
 
-// Types (unchanged)
 interface User {
   id: number;
   name: string;
@@ -135,7 +134,6 @@ function ProductPage() {
         </div>
       )}
 
-      {/* Image and details - unchanged from your original */}
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Image */}
         <div className="card bg-base-300">
