@@ -187,18 +187,15 @@ export const login = async (
   }
 }
 
-
 // Logout
 export const logout = async (
   req: Request,
   res: Response
 ) => {
-  // Match exactly the options used when setting the cookie
-  const isProduction = process.env.NODE_ENV === "production";
   res.clearCookie("token", {
     httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction ? "none" : "lax",
+    secure: true,
+    sameSite: "none",
     path: "/",
   });
 
