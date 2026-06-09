@@ -3,6 +3,7 @@ import { SendIcon, Trash2Icon, MessageSquareIcon, LogInIcon } from "lucide-react
 import { useAuthContext } from "../context/AuthContext";
 import { useCreateComment, useDeleteComment } from "../hooks/useComment";
 import { Link } from "react-router";
+import { toast } from "react-toastify";
 
 interface User {
   id: number;
@@ -26,16 +27,16 @@ interface CommentsSectionProps {
 }
 
 const getUserInitial = (user?: User) => {
-  if (!user?.name) return "?"
-  return user.name.charAt(0).toUpperCase()
-
-}
+  if (!user?.name) return "?";
+  return user.name.charAt(0).toUpperCase();
+};
 
 const CommentsSection = ({ productId, comments = [], currentUserId }: CommentsSectionProps) => {
   const { isAuthenticated } = useAuthContext();
   const [content, setContent] = useState("");
   const createComment = useCreateComment();
   const deleteComment = useDeleteComment(productId);
+  const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,15 +45,24 @@ const CommentsSection = ({ productId, comments = [], currentUserId }: CommentsSe
       { productId, content },
       {
         onSuccess: () => setContent(""),
-        onError: (err) => console.error("Create comment error: ", err)
+        onError: (err) => console.error("Create comment error: ", err),
       }
     );
   };
 
-  const handleDelete = (commentId: string) => {
-    if (confirm("Delete this comment?")) {
-      deleteComment.mutate(commentId);
-    }
+  const handleDeleteConfirm = () => {
+    if (!deletingCommentId) return;
+    deleteComment.mutate(deletingCommentId, {
+      onSuccess: () => {
+        toast.success("Comment deleted successfully");
+        setDeletingCommentId(null);
+      },
+      onError: (err) => {
+        toast.error("Failed to delete comment");
+        console.error(err);
+        setDeletingCommentId(null);
+      },
+    });
   };
 
   return (
@@ -129,7 +139,6 @@ const CommentsSection = ({ productId, comments = [], currentUserId }: CommentsSe
                 </time>
               </div>
 
-
               <div className="w-full flex items-center gap-1">
                 <div className="chat-bubble chat-bubble-neutral text-sm">
                   {comment.content}
@@ -138,11 +147,11 @@ const CommentsSection = ({ productId, comments = [], currentUserId }: CommentsSe
                 {currentUserId === comment.userId && (
                   <div className="chat-footer">
                     <button
-                      onClick={() => handleDelete(comment.id)}
+                      onClick={() => setDeletingCommentId(comment.id)}
                       className="btn btn-ghost btn-xs text-error"
-                      disabled={deleteComment.isPending}
+                      disabled={deleteComment.isPending && deletingCommentId === comment.id}
                     >
-                      {deleteComment.isPending ? (
+                      {deleteComment.isPending && deletingCommentId === comment.id ? (
                         <span className="loading loading-spinner loading-xs" />
                       ) : (
                         <Trash2Icon className="size-3" />
@@ -151,11 +160,41 @@ const CommentsSection = ({ productId, comments = [], currentUserId }: CommentsSe
                   </div>
                 )}
               </div>
-
             </div>
           ))
         )}
       </div>
+
+      {/* Delete confirmation modal - outside the comment loop */}
+      {deletingCommentId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="card bg-base-200 w-96 shadow-xl">
+            <div className="card-body">
+              <h2 className="card-title text-error">Confirm Deletion</h2>
+              <p>Are you sure you want to delete this comment? This action cannot be undone.</p>
+              <div className="card-actions justify-end mt-4">
+                <button
+                  className="btn btn-ghost"
+                  onClick={() => setDeletingCommentId(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="btn btn-error"
+                  onClick={handleDeleteConfirm}
+                  disabled={deleteComment.isPending}
+                >
+                  {deleteComment.isPending ? (
+                    <span className="loading loading-spinner loading-xs" />
+                  ) : (
+                    "Delete"
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
